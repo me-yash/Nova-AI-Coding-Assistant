@@ -1281,76 +1281,614 @@ textarea {
     }
 }
 
-
 /* =====================================
-   NOVA ONLINE AUTH
+   NOVA // WEB-SLINGER THEME
+   Spider-Man-inspired red / blue cinematic UI
 ===================================== */
-#novaAuthOverlay {
+
+:root {
+    --nova-red: #e21d2f;
+    --nova-red-bright: #ff3045;
+    --nova-blue: #168cff;
+    --nova-blue-deep: #071a33;
+    --nova-ink: #05070b;
+    --nova-panel: #0b1018;
+    --nova-panel-2: #101722;
+    --nova-line: rgba(61, 146, 255, .20);
+    --nova-text: #f5f8ff;
+    --nova-muted: #8390a4;
+}
+
+body {
+    background:
+        radial-gradient(circle at 78% 8%, rgba(22, 140, 255, .12), transparent 28%),
+        radial-gradient(circle at 16% 92%, rgba(226, 29, 47, .10), transparent 30%),
+        linear-gradient(135deg, #04060a 0%, #07101d 52%, #08070a 100%);
+}
+
+body::before {
+    content: "";
     position: fixed;
     inset: 0;
-    z-index: 9999;
-    display: grid;
-    place-items: center;
-    padding: 20px;
-    background: radial-gradient(circle at 50% 20%, #12335d 0, #050a12 55%, #020307 100%);
+    pointer-events: none;
+    opacity: .12;
+    background-image:
+        linear-gradient(30deg, transparent 47%, rgba(255,255,255,.16) 49%, transparent 51%),
+        linear-gradient(150deg, transparent 47%, rgba(255,255,255,.12) 49%, transparent 51%),
+        radial-gradient(circle at center, transparent 0 25px, rgba(255,255,255,.12) 26px, transparent 27px);
+    background-size: 72px 72px, 72px 72px, 144px 144px;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,.65), transparent 75%);
 }
-#novaAuthOverlay.hidden { display: none; }
-#novaAuthOverlay::before {
+
+.sidebar {
+    background: linear-gradient(180deg, rgba(7,11,18,.98), rgba(5,7,11,.98));
+    border-right: 1px solid var(--nova-line);
+    box-shadow: 14px 0 45px rgba(0,0,0,.35);
+}
+
+.brand-logo,
+.nova-logo {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, var(--nova-red-bright), #a90018 58%, var(--nova-blue));
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.18);
+    box-shadow: 0 0 0 1px rgba(226,29,47,.18), 0 10px 32px rgba(226,29,47,.24), 0 0 28px rgba(22,140,255,.13);
+}
+
+.brand-logo::after,
+.nova-logo::after {
     content: "";
     position: absolute;
-    inset: 0;
-    opacity: .16;
-    background-image: linear-gradient(30deg, transparent 48%, #e11 49%, transparent 51%), linear-gradient(150deg, transparent 48%, #178bff 49%, transparent 51%);
-    background-size: 110px 110px;
-    pointer-events: none;
+    inset: -50%;
+    background: repeating-radial-gradient(circle, transparent 0 13px, rgba(255,255,255,.12) 14px 15px, transparent 16px 28px);
+    transform: rotate(22deg);
+    opacity: .55;
 }
-.nova-auth-card {
+
+.brand-logo,
+.nova-logo { isolation: isolate; }
+.brand-logo,
+.nova-logo { z-index: 0; }
+.brand-logo::after,
+.nova-logo::after { z-index: -1; }
+
+.brand h1 {
+    letter-spacing: .4px;
+}
+
+.brand p,
+header p,
+.disclaimer,
+.section-title {
+    color: var(--nova-muted);
+}
+
+#newChatButton {
+    border-color: rgba(22,140,255,.25);
+    background: linear-gradient(135deg, rgba(226,29,47,.14), rgba(22,140,255,.10));
+    box-shadow: inset 0 0 18px rgba(22,140,255,.04);
+}
+
+#newChatButton:hover {
+    border-color: rgba(226,29,47,.55);
+    background: linear-gradient(135deg, rgba(226,29,47,.24), rgba(22,140,255,.14));
+    box-shadow: 0 0 22px rgba(226,29,47,.12);
+}
+
+.conversation-wrapper:hover,
+.conversation-wrapper.active,
+.conversation-item:hover,
+.conversation-item.active {
+    background: linear-gradient(90deg, rgba(226,29,47,.14), rgba(22,140,255,.08));
+}
+
+.conversation-wrapper.active {
+    box-shadow: inset 2px 0 0 var(--nova-red-bright), inset 0 0 20px rgba(22,140,255,.04);
+}
+
+.status-dot {
+    background: var(--nova-blue);
+    box-shadow: 0 0 10px rgba(22,140,255,.8);
+}
+
+.main-area {
+    background:
+        radial-gradient(circle at 82% 4%, rgba(22,140,255,.08), transparent 24%),
+        radial-gradient(circle at 8% 100%, rgba(226,29,47,.06), transparent 25%),
+        rgba(5,7,11,.88);
+}
+
+header {
+    border-bottom-color: var(--nova-line);
+    background: rgba(5,8,13,.72);
+}
+
+header h2 {
     position: relative;
-    width: min(410px, 100%);
-    padding: 34px;
-    border: 1px solid #294e79;
-    border-radius: 24px;
-    background: rgba(7, 17, 31, .94);
-    box-shadow: 0 30px 100px rgba(0,0,0,.65), 0 0 45px rgba(225,29,72,.12), 0 0 55px rgba(23,139,255,.12);
-    text-align: center;
 }
-.nova-auth-logo {
-    width: 62px;
-    height: 62px;
-    margin: 0 auto 14px;
-    display: grid;
-    place-items: center;
-    border-radius: 18px;
+
+header h2::before {
+    content: "";
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin: 0 9px 2px 0;
+    border-radius: 50%;
+    background: var(--nova-red-bright);
+    box-shadow: 0 0 12px rgba(255,48,69,.8);
+}
+
+.welcome h2 {
+    text-shadow: 0 0 30px rgba(22,140,255,.10);
+}
+
+.welcome p {
+    color: #8997aa;
+}
+
+.user .message-content {
+    background: linear-gradient(135deg, rgba(226,29,47,.24), rgba(22,140,255,.13));
+    border: 1px solid rgba(226,29,47,.25);
+    box-shadow: 0 8px 28px rgba(0,0,0,.25), inset 0 0 24px rgba(22,140,255,.04);
+}
+
+.assistant .message-content {
+    color: #e9eef7;
+}
+
+.assistant .message-content a {
+    color: #57aaff;
+}
+
+.assistant .message-content blockquote {
+    border-left: 3px solid var(--nova-red);
+    padding-left: 12px;
+}
+
+.assistant .message-content :not(pre) > code {
+    background: rgba(22,140,255,.10);
+    border: 1px solid rgba(22,140,255,.18);
+    color: #8fc8ff;
+}
+
+.code-block {
+    border-color: rgba(22,140,255,.22);
+    background: #05080d;
+    box-shadow: 0 14px 35px rgba(0,0,0,.24);
+}
+
+.code-header {
+    background: linear-gradient(90deg, rgba(226,29,47,.12), rgba(22,140,255,.10));
+    border-bottom-color: rgba(22,140,255,.18);
+}
+
+.code-header .copy-button:hover {
+    background: rgba(226,29,47,.18);
     color: #fff;
-    font-size: 28px;
-    font-weight: 900;
-    background: linear-gradient(145deg, #e31b3f, #9f1028 55%, #0c6dd9);
-    box-shadow: 0 0 30px rgba(225,29,72,.3);
 }
-.nova-auth-card h1 { margin-bottom: 7px; }
-.nova-auth-sub { color: #9fb2c8; font-size: 13px; margin-bottom: 22px; line-height: 1.5; }
-#novaAuthForm { display: grid; gap: 11px; }
-#novaAuthForm input {
-    width: 100%;
-    padding: 13px 14px;
-    border: 1px solid #29415f;
-    border-radius: 11px;
-    outline: none;
-    background: #081322;
-    color: #fff;
+
+.code-block pre {
+    background: #04070b;
 }
-#novaAuthForm input:focus { border-color: #168cff; box-shadow: 0 0 0 3px rgba(22,140,255,.12); }
-#novaAuthSubmit, .nova-auth-secondary {
-    width: 100%;
-    padding: 13px 14px;
-    border: 0;
-    border-radius: 11px;
-    cursor: pointer;
-    font-weight: 700;
+
+.input-area {
+    background: linear-gradient(transparent, rgba(4,6,10,.96) 32%);
 }
-#novaAuthSubmit { color: #fff; background: linear-gradient(135deg, #e21d3f, #b10f2c); }
-.nova-auth-secondary { margin-top: 10px; color: #d7e7f9; background: #0e2239; border: 1px solid #23466c; }
-.nova-auth-link { margin-top: 12px; background: transparent; border: 0; color: #64b7ff; cursor: pointer; font-size: 12px; }
-.nova-auth-status { min-height: 18px; margin-top: 12px; color: #9ed3ff; font-size: 12px; line-height: 1.4; }
-.nova-auth-status.error { color: #ff9cab; }
-.nova-logout { margin-left: 8px; border: 0; background: transparent; color: #7fa4c7; cursor: pointer; font-size: 11px; }
+
+.input-container {
+    border-color: rgba(22,140,255,.28);
+    background: linear-gradient(135deg, rgba(10,16,25,.94), rgba(12,10,15,.94));
+    box-shadow: 0 18px 55px rgba(0,0,0,.42), 0 0 28px rgba(22,140,255,.06);
+}
+
+.input-container:focus-within {
+    border-color: rgba(226,29,47,.65);
+    box-shadow: 0 18px 55px rgba(0,0,0,.42), 0 0 28px rgba(226,29,47,.12), 0 0 0 1px rgba(22,140,255,.12);
+}
+
+textarea::placeholder {
+    color: #66748a;
+}
+
+#attachButton:hover {
+    background: rgba(22,140,255,.12);
+    color: #6bb8ff;
+}
+
+#sendButton {
+    background: linear-gradient(145deg, var(--nova-red-bright), #b90f25 65%, #7f0719);
+    color: white;
+    border: 1px solid rgba(255,255,255,.14);
+    box-shadow: 0 5px 18px rgba(226,29,47,.28), inset 0 1px 0 rgba(255,255,255,.16);
+}
+
+#sendButton:hover {
+    background: linear-gradient(145deg, #ff4558, var(--nova-red), #941025);
+    box-shadow: 0 7px 24px rgba(226,29,47,.38), 0 0 18px rgba(22,140,255,.12);
+}
+
+#sendButton:disabled {
+    background: #303844;
+    box-shadow: none;
+}
+
+.attached-file,
+.file-chip,
+.project-indicator,
+.attachment-menu,
+.sent-file-chip {
+    background: linear-gradient(135deg, rgba(226,29,47,.08), rgba(22,140,255,.07));
+    border-color: rgba(22,140,255,.20);
+}
+
+.attachment-menu-item:hover {
+    background: rgba(226,29,47,.13);
+}
+
+.delete-chat-button:hover,
+#removeFileButton:hover {
+    background: rgba(226,29,47,.16);
+    color: #ff6575;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--nova-red), var(--nova-blue));
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255,255,255,.02);
+}
+
+@media (max-width: 560px) {
+    body::before { opacity: .07; }
+}
+
+/* =====================================
+   RESPONSIVE / MOBILE
+===================================== */
+
+/* Tablets and smaller laptops */
+@media (max-width: 900px) {
+    .sidebar {
+        width: 220px;
+    }
+
+    .sidebar-top {
+        padding: 16px 12px;
+    }
+
+    .brand {
+        gap: 9px;
+        margin-bottom: 18px;
+    }
+
+    .brand-logo {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+    }
+
+    .main-area header {
+        padding: 16px 20px;
+    }
+
+    .chat,
+    #chat {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .input-area {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+    body {
+        overflow: hidden;
+    }
+
+    .app {
+        position: relative;
+        width: 100%;
+    }
+
+    .sidebar {
+        width: 72px;
+        min-width: 72px;
+    }
+
+    .sidebar-top {
+        padding: 14px 8px;
+    }
+
+    .brand {
+        justify-content: center;
+        padding: 0;
+        margin-bottom: 18px;
+    }
+
+    .brand > div:last-child {
+        display: none;
+    }
+
+    .brand-logo {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+    }
+
+    #newChatButton {
+        width: 100%;
+        padding: 10px 4px;
+        font-size: 0;
+        justify-content: center;
+        gap: 0;
+    }
+
+    #newChatButton span {
+        font-size: 22px;
+    }
+
+    .section-title {
+        display: none;
+    }
+
+    #conversationList {
+        padding: 0 6px;
+    }
+
+    .conversation-item {
+        padding: 10px 6px;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .conversation-item .conversation-title {
+        font-size: 0;
+    }
+
+    .conversation-item .conversation-title::first-letter {
+        font-size: 14px;
+    }
+
+    .sidebar-bottom {
+        padding: 10px 6px;
+    }
+
+    .status {
+        justify-content: center;
+        font-size: 0;
+        gap: 0;
+    }
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+    }
+
+    .nova-logout {
+        display: none;
+    }
+
+    .main-area {
+        min-width: 0;
+        width: calc(100% - 72px);
+    }
+
+    header,
+    .main-area header {
+        padding: 14px 16px;
+    }
+
+    #chatTitle {
+        font-size: 18px;
+    }
+
+    #modelStatus {
+        font-size: 11px;
+    }
+
+    #chat,
+    .chat {
+        padding: 18px 12px 130px;
+    }
+
+    .welcome {
+        padding: 20px 12px;
+    }
+
+    .welcome h2 {
+        font-size: 22px;
+        text-align: center;
+    }
+
+    .welcome p {
+        max-width: 320px;
+        font-size: 13px;
+        line-height: 1.55;
+        text-align: center;
+    }
+
+    .message {
+        max-width: 94%;
+    }
+
+    .message-content {
+        padding: 10px 12px;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .input-area {
+        padding: 8px 10px 10px;
+    }
+
+    .input-container {
+        gap: 6px;
+        padding: 7px;
+        border-radius: 14px;
+    }
+
+    #attachButton,
+    #sendButton {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+    }
+
+    textarea#messageInput {
+        min-height: 38px;
+        max-height: 120px;
+        font-size: 14px;
+    }
+
+    .disclaimer {
+        font-size: 9px;
+        line-height: 1.35;
+        padding: 4px 8px 0;
+        text-align: center;
+    }
+
+    .attachment-menu {
+        left: 8px;
+        bottom: 58px;
+        max-width: calc(100vw - 92px);
+    }
+
+    .attached-file,
+    .project-indicator {
+        max-width: 100%;
+        font-size: 11px;
+    }
+
+    .code-block {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .code-block pre {
+        font-size: 12px;
+    }
+}
+
+/* Very small phones */
+@media (max-width: 430px) {
+    .sidebar {
+        width: 58px;
+        min-width: 58px;
+    }
+
+    .main-area {
+        width: calc(100% - 58px);
+    }
+
+    .brand-logo {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+    }
+
+    #newChatButton {
+        padding: 8px 2px;
+    }
+
+    #chat,
+    .chat {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .message {
+        max-width: 97%;
+    }
+
+    .message-content {
+        font-size: 13px;
+        padding: 9px 10px;
+    }
+
+    .input-area {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    #attachButton,
+    #sendButton {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+    }
+
+    textarea#messageInput {
+        font-size: 13px;
+    }
+}
+
+/* Auth card responsive */
+@media (max-width: 560px) {
+    #novaAuthOverlay {
+        padding: 16px;
+    }
+
+    .nova-auth-card {
+        width: min(100%, 390px);
+        padding: 26px 20px;
+        border-radius: 18px;
+    }
+
+    .nova-auth-card h1 {
+        font-size: 26px;
+    }
+
+    .nova-auth-sub {
+        font-size: 12px;
+    }
+
+    .nova-auth-card input,
+    .nova-auth-card button {
+        min-height: 44px;
+    }
+}
+
+/* Landscape phones */
+@media (max-height: 500px) and (max-width: 900px) {
+    .welcome {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .welcome h2 {
+        font-size: 18px;
+    }
+
+    .welcome p {
+        display: none;
+    }
+
+    .input-area {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+}
+
+/* Prevent accidental horizontal scrolling on small screens */
+@media (max-width: 900px) {
+    html,
+    body,
+    .app,
+    .main-area,
+    #chat {
+        max-width: 100%;
+    }
+
+    .message-content,
+    .project-indicator,
+    .attached-file,
+    .attachment-menu {
+        overflow-wrap: anywhere;
+    }
+}
