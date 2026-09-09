@@ -54,17 +54,21 @@
   // Supabase
   // --------------------------------------------------
 
-  const supabase = window.supabase.createClient(
-    config.SUPABASE_URL,
-    config.SUPABASE_PUBLISHABLE_KEY,
-    {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true
-      }
+ const supabase = window.supabase.createClient(
+  config.SUPABASE_URL,
+  config.SUPABASE_PUBLISHABLE_KEY,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true
+    },
+
+    global: {
+      fetch: nativeFetch
     }
-  );
+  }
+);
 
   window.NOVA_SUPABASE = supabase;
 
@@ -300,221 +304,150 @@
     // --------------------------------------------------
 
     form.onsubmit = async (event) => {
+  event.preventDefault();
 
-      event.preventDefault();
+  submit.disabled = true;
 
-      submit.disabled = true;
+  const email = document
+    .getElementById("novaAuthEmail")
+    .value
+    .trim();
 
-      const email =
-        document
-          .getElementById("novaAuthEmail")
-          .value
-          .trim();
+  const password = document
+    .getElementById("novaAuthPassword")
+    .value;
 
-      const password =
-        document
-          .getElementById("novaAuthPassword")
-          .value;
+  if (!email) {
+    submit.disabled = false;
+    return setStatus("Enter your email.", true);
+  }
 
-      if (!email) {
+  if (!password || password.length < 6) {
+    submit.disabled = false;
+    return setStatus(
+      "Password must be at least 6 characters.",
+      true
+    );
+  }
+
+  setStatus(
+    signUp
+      ? "Creating account..."
+      : "Signing in..."
+  );
+
+  const authUrl = signUp
+    ? `${config.SUPABASE_URL}/auth/v1/signup`
+    : `${config.SUPABASE_URL}/auth/v1/token?grant_type=password`;
+
+  const controller = new AbortController();
+
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, 15000);
+
+  try {
+    const response = await nativeFetch(authUrl, {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": config.SUPABASE_PUBLISHABLE_KEY
+      },
+
+      body: JSON.stringify({
+        email,
+        password
+      }),
+
+      signal: controller.signal
+    });
+
+    clearTimeout(timeoutId);
+
+    const data = await response
+      .json()
+      .catch(() => ({}));
+
+    if (!response.ok) {
+      submit.disabled = false;
+
+      const message =
+        data?.msg ||
+        data?.message ||
+        data?.error_description ||
+        data?.error ||
+        `Authentication failed (${response.status}).`;
+
+      return setStatus(message, true);
+    }
+
+    // SIGN UP
+    if (signUp) {
+      if (
+        data?.access_token &&
+        data?.refresh_token
+      ) {
+        await supabase.auth.setSession({
+          access_token: data.access_token,
+          refresh_token: data.refresh_token
+        });
+
         submit.disabled = false;
+        hideAuth();
 
-        return setStatus(
-          "Enter your email.",
-          true
-        );
+        return;
       }
 
-      if (!password || password.length < 6) {
-        submit.disabled = false;
+      submit.disabled = false;
 
-        return setStatus(
-          "Password must be at least 6 characters.",
-          true
-        );
-      }
-
-      setStatus(
-        signUp
-          ? "Creating account..."
-          : "Signing in..."
+      return setStatus(
+        "Account created. Check your email to confirm it, then sign in."
       );
+    }
 
-      const authUrl = signUp
-        ? `${config.SUPABASE_URL}/auth/v1/signup`
-        : `${config.SUPABASE_URL}/auth/v1/token?grant_type=password`;
+    // SIGN IN
+    if (
+      data?.access_token &&
+      data?.refresh_token
+    ) {
+      await supabase.auth.setSession({
+        access_token: data.access_token,
+        refresh_token: data.refresh_token
+      });
 
-      const controller =
-        new AbortController();
+      submit.disabled = false;
+      hideAuth();
 
-      const timeoutId =
-        setTimeout(() => {
-          controller.abort();
-        }, 15000);
+      return;
+    }
 
-      try {
+    submit.disabled = false;
 
-        /*
-          IMPORTANT:
-          Use nativeFetch here.
+    return setStatus(
+      "Login failed. No session received.",
+      true
+    );
 
-          window.fetch has been replaced by
-          onlineFetch below, so using fetch()
-          here would cause a recursive request.
-        */
+  } catch (error) {
+    clearTimeout(timeoutId);
 
-        const response =
-          await nativeFetch(
-            authUrl,
-            {
-              method: "POST",
+    submit.disabled = false;
 
-              headers: {
-                "Content-Type":
-                  "application/json",
+    if (error?.name === "AbortError") {
+      return setStatus(
+        "Supabase connection timed out. Please try again.",
+        true
+      );
+    }
 
-                "apikey":
-                  config.SUPABASE_PUBLISHABLE_KEY
-              },
-
-              body: JSON.stringify({
-                email,
-                password
-              }),
-
-              signal:
-                controller.signal
-            }
-          );
-
-        clearTimeout(timeoutId);
-
-        const data =
-          await response
-            .json()
-            .catch(() => ({}));
-
-        // ----------------------------------------------
-        // Supabase returned an error
-        // ----------------------------------------------
-
-        if (!response.ok) {
-
-          submit.disabled = false;
-
-          const message =
-            data?.msg ||
-            data?.message ||
-            data?.error_description ||
-            data?.error ||
-            `Authentication failed (${response.status}).`;
-
-          return setStatus(
-            message,
-            true
-          );
-        }
-
-        // ----------------------------------------------
-        // Signup
-        // ----------------------------------------------
-
-        if (signUp) {
-
-          /*
-            If email confirmation is disabled,
-            Supabase can return a session immediately.
-          */
-
-          if (
-            data?.access_token &&
-            data?.refresh_token
-          ) {
-
-            await supabase.auth.setSession({
-              access_token:
-                data.access_token,
-
-              refresh_token:
-                data.refresh_token
-            });
-
-            submit.disabled = false;
-
-            setStatus(
-              "Account created successfully!"
-            );
-
-            hideAuth();
-
-            return;
-          }
-
-          /*
-            Email confirmation is enabled.
-          */
-
-          submit.disabled = false;
-
-          return setStatus(
-            "Account created. Check your email to confirm it, then sign in."
-          );
-        }
-
-        // ----------------------------------------------
-        // Login
-        // ----------------------------------------------
-
-        if (
-          data?.access_token &&
-          data?.refresh_token
-        ) {
-
-          await supabase.auth.setSession({
-            access_token:
-              data.access_token,
-
-            refresh_token:
-              data.refresh_token
-          });
-
-          submit.disabled = false;
-
-          hideAuth();
-
-          return;
-        }
-
-        submit.disabled = false;
-
-        return setStatus(
-          "Login failed. No session received.",
-          true
-        );
-
-      } catch (error) {
-
-        clearTimeout(timeoutId);
-
-        submit.disabled = false;
-
-        if (
-          error?.name === "AbortError"
-        ) {
-
-          return setStatus(
-            "Supabase connection timed out. Please try again.",
-            true
-          );
-        }
-
-        return setStatus(
-          error?.message ||
-          "Unable to connect to Supabase.",
-          true
-        );
-      }
-    };
+    return setStatus(
+      error?.message ||
+      "Unable to connect to Supabase.",
+      true
+    );
+  }
+};
   }
 
   // --------------------------------------------------
