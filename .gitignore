@@ -1,0 +1,7 @@
+node_modules/
+nova.db
+nova.db-shm
+nova.db-wal
+.env
+.DS_Store
+_site/

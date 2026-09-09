@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nova - AI Coding Assistant</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="online-bridge.js"></script>
+</head>
+
+
+<body>
+
+    <div class="app">
+
+        <!-- =========================
+             SIDEBAR
+        ========================== -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-top">
+
+                <div class="brand">
+                    <div class="brand-logo">
+                        N
+                    </div>
+
+                    <div>
+                        <h1>Nova</h1>
+                        <p>AI Coding Assistant</p>
+                    </div>
+                </div>
+
+
+                <button id="newChatButton">
+                    <span>+</span>
+                    New Chat
+                </button>
+
+            </div>
+
+
+            <div class="sidebar-section">
+
+                <p class="section-title">
+                    Recent Chats
+                </p>
+
+
+                <div id="conversationList">
+
+                    <!-- Saved chats will
+                         appear here -->
+
+                </div>
+
+            </div>
+
+
+            <div class="sidebar-bottom">
+
+                <div class="status">
+                    <span class="status-dot"></span>
+
+                    Local AI
+                </div>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =========================
+             MAIN AREA
+        ========================== -->
+
+        <div class="main-area">
+
+            <header>
+
+                <div>
+
+                    <h2 id="chatTitle">
+                        New Chat
+                    </h2>
+
+                    <p id="modelStatus">Gemini • Online</p>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- =========================
+                 CHAT
+            ========================== -->
+
+            <main id="chat">
+
+                <div class="welcome" id="welcome">
+
+                    <div class="nova-logo">
+                        N
+                    </div>
+
+                    <h2>
+                        How can I help you code?
+                    </h2>
+
+                    <p>
+                        Ask me to write code,
+                        explain errors,
+                        debug programs,
+                        or help build your project.
+                    </p>
+
+                </div>
+
+            </main>
+
+
+
+            <!-- =========================
+                 INPUT
+            ========================== -->
+
+            <div class="input-area">
+
+                <div class="input-container">
+
+                    <input type="file" id="fileInput" hidden multiple
+                        accept=".html,.css,.js,.jsx,.ts,.tsx,.json,.py,.java,.c,.cpp,.cs,.php,.sql,.md,.txt">
+
+                    <input type="file" id="folderInput" webkitdirectory multiple hidden>
+
+
+                    <button id="attachButton" title="Attach code file">
+                        +
+                    </button>
+
+                    <div id="attachmentMenu" class="attachment-menu hidden">
+                        <button id="attachFilesOption" type="button" class="attachment-menu-item">
+                            <span>📄</span>
+                            <span>Attach files</span>
+                        </button>
+
+                        <button id="openProjectOption" type="button" class="attachment-menu-item">
+                            <span>📁</span>
+                            <span>Open project</span>
+                        </button>
+                    </div>
+
+                    <div class="input-main">
+
+                        <div id="attachedFile" class="attached-file hidden">
+
+                            <span id="attachedFileName"></span>
+
+                            <button id="removeFileButton" title="Remove file">
+                                ×
+                            </button>
+
+                        </div>
+
+
+                        <!-- Loaded project appears independently -->
+                        <div id="projectIndicator" class="project-indicator hidden"></div>
+
+
+                        <textarea id="messageInput" placeholder="Ask Nova..." rows="1"></textarea>
+
+                    </div>
+
+
+                    <button id="sendButton" title="Send message">
+                        ↑
+                    </button>
+
+                </div>
+
+
+                <p class="disclaimer">
+                    Nova runs online. Your chats are synced to your Supabase account.
+                    AI responses may contain mistakes.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

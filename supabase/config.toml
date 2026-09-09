@@ -1,0 +1,4 @@
+project_id = "YOUR_PROJECT_ID"
+
+[functions.nova-api]
+verify_jwt = true

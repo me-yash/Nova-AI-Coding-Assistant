@@ -1,0 +1,51 @@
+{
+  "name": "nova-vscode",
+  "displayName": "Nova",
+  "description": "Nova AI assistant for Visual Studio Code",
+  "version": "0.1.0",
+  "publisher": "yash",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:nova.openChat"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "nova.openChat",
+        "title": "Nova: Open Chat"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "nova",
+          "title": "Nova",
+          "icon": "media/nova.svg"
+        }
+      ]
+    },
+   "views": {
+  "nova": [
+    {
+      "id": "nova.chatView",
+      "name": "Chat",
+      "type": "webview"
+    }
+  ]
+}
+  },
+  "scripts": {
+    "compile": "tsc",
+    "watch": "tsc --watch"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.125.0",
+    "typescript": "^7.0.2"
+  }
+}
