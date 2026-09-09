@@ -76,9 +76,16 @@
       setStatus("Working...");
       const email = document.getElementById("novaAuthEmail").value.trim();
       const password = document.getElementById("novaAuthPassword").value;
-      const result = signUp
-        ? await supabase.auth.signUp({ email, password })
-        : await supabase.auth.signInWithPassword({ email, password });
+      let result;
+
+try {
+  result = signUp
+    ? await supabase.auth.signUp({ email, password })
+    : await supabase.auth.signInWithPassword({ email, password });
+} catch (error) {
+  submit.disabled = false;
+  return setStatus(error?.message || "Authentication failed.", true);
+}
       submit.disabled = false;
       if (result.error) return setStatus(result.error.message, true);
       if (signUp && !result.data.session) return setStatus("Account created. Check your email to confirm it, then sign in.");
