@@ -1549,346 +1549,270 @@ textarea::placeholder {
 ===================================== */
 
 /* Tablets and smaller laptops */
-@media (max-width: 900px) {
-    .sidebar {
-        width: 220px;
-    }
+/* =========================================================
+   NOVA MOBILE RESPONSIVE — PHONE FIX
+   Paste this at the VERY END of public/style.css
+   ========================================================= */
 
-    .sidebar-top {
-        padding: 16px 12px;
-    }
+@media (max-width: 768px) {
 
-    .brand {
-        gap: 9px;
-        margin-bottom: 18px;
-    }
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
 
-    .brand-logo {
-        width: 38px;
-        height: 38px;
-        min-width: 38px;
-    }
+  body {
+    min-width: 0 !important;
+  }
 
-    .main-area header {
-        padding: 16px 20px;
-    }
+  /* ---------- APP LAYOUT ---------- */
 
-    .chat,
-    #chat {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
+  .app,
+  .app-container,
+  .main-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden;
+  }
 
-    .input-area {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
+  /* ---------- SIDEBAR ---------- */
+
+  .sidebar {
+    width: 280px !important;
+    max-width: 82vw !important;
+  }
+
+  .sidebar.hidden,
+  .sidebar.collapsed {
+    transform: translateX(-100%);
+  }
+
+  /* ---------- MAIN CHAT ---------- */
+
+  .main-content,
+  .chat-container,
+  .chat-area {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  /* ---------- TOP BAR ---------- */
+
+  .top-bar,
+  .header,
+  .chat-header {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    min-height: 56px;
+  }
+
+  /* ---------- CHAT MESSAGES ---------- */
+
+  .messages,
+  .chat-messages,
+  #messages {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    box-sizing: border-box;
+  }
+
+  .message {
+    max-width: 100% !important;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .message-content {
+    max-width: 100% !important;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* ---------- CODE BLOCKS ---------- */
+
+  pre {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    box-sizing: border-box;
+    font-size: 12px !important;
+  }
+
+  code {
+    word-break: break-word;
+  }
+
+  /* ---------- INPUT AREA ---------- */
+
+  .input-area,
+  .chat-input-area,
+  .composer {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    padding: 8px 10px !important;
+  }
+
+  textarea,
+  .message-input,
+  #messageInput {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    font-size: 16px !important;
+  }
+
+  /* Prevent iPhone Safari zoom */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+
+  /* ---------- BUTTONS ---------- */
+
+  button {
+    max-width: 100%;
+  }
+
+  /* ---------- LOGIN / AUTH ---------- */
+
+  .auth-container,
+  .auth-card,
+  .login-container,
+  .login-card {
+    width: calc(100% - 28px) !important;
+    max-width: 420px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box;
+  }
+
+  .auth-container input,
+  .auth-card input,
+  .login-container input,
+  .login-card input {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  /* ---------- MODALS ---------- */
+
+  .modal,
+  .modal-content {
+    max-width: calc(100vw - 24px) !important;
+    box-sizing: border-box;
+  }
+
+  /* ---------- SETTINGS / PANELS ---------- */
+
+  .settings-panel,
+  .settings-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    padding: 16px !important;
+  }
+
 }
 
-/* Mobile */
-@media (max-width: 700px) {
-    body {
-        overflow: hidden;
-    }
 
-    .app {
-        position: relative;
-        width: 100%;
-    }
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
 
-    .sidebar {
-        width: 72px;
-        min-width: 72px;
-    }
+@media (max-width: 480px) {
 
-    .sidebar-top {
-        padding: 14px 8px;
-    }
+  /* Overall spacing */
+  .top-bar,
+  .header,
+  .chat-header {
+    padding: 8px 10px !important;
+  }
 
-    .brand {
-        justify-content: center;
-        padding: 0;
-        margin-bottom: 18px;
-    }
+  /* Sidebar */
+  .sidebar {
+    width: 270px !important;
+    max-width: 85vw !important;
+  }
 
-    .brand > div:last-child {
-        display: none;
-    }
+  /* Messages */
+  .messages,
+  .chat-messages,
+  #messages {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
 
-    .brand-logo {
-        width: 42px;
-        height: 42px;
-        min-width: 42px;
-    }
+  .message {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
 
-    #newChatButton {
-        width: 100%;
-        padding: 10px 4px;
-        font-size: 0;
-        justify-content: center;
-        gap: 0;
-    }
+  /* Composer */
+  .input-area,
+  .chat-input-area,
+  .composer {
+    padding: 6px 8px !important;
+  }
 
-    #newChatButton span {
-        font-size: 22px;
-    }
+  textarea,
+  .message-input,
+  #messageInput {
+    min-height: 44px !important;
+    max-height: 130px !important;
+    padding: 10px !important;
+  }
 
-    .section-title {
-        display: none;
-    }
+  /* Auth */
+  .auth-container,
+  .auth-card,
+  .login-container,
+  .login-card {
+    width: calc(100% - 20px) !important;
+    padding: 18px !important;
+  }
 
-    #conversationList {
-        padding: 0 6px;
-    }
+  /* Hide non-essential desktop text */
+  .desktop-only {
+    display: none !important;
+  }
 
-    .conversation-item {
-        padding: 10px 6px;
-        text-align: center;
-        overflow: hidden;
-    }
-
-    .conversation-item .conversation-title {
-        font-size: 0;
-    }
-
-    .conversation-item .conversation-title::first-letter {
-        font-size: 14px;
-    }
-
-    .sidebar-bottom {
-        padding: 10px 6px;
-    }
-
-    .status {
-        justify-content: center;
-        font-size: 0;
-        gap: 0;
-    }
-
-    .status-dot {
-        width: 8px;
-        height: 8px;
-    }
-
-    .nova-logout {
-        display: none;
-    }
-
-    .main-area {
-        min-width: 0;
-        width: calc(100% - 72px);
-    }
-
-    header,
-    .main-area header {
-        padding: 14px 16px;
-    }
-
-    #chatTitle {
-        font-size: 18px;
-    }
-
-    #modelStatus {
-        font-size: 11px;
-    }
-
-    #chat,
-    .chat {
-        padding: 18px 12px 130px;
-    }
-
-    .welcome {
-        padding: 20px 12px;
-    }
-
-    .welcome h2 {
-        font-size: 22px;
-        text-align: center;
-    }
-
-    .welcome p {
-        max-width: 320px;
-        font-size: 13px;
-        line-height: 1.55;
-        text-align: center;
-    }
-
-    .message {
-        max-width: 94%;
-    }
-
-    .message-content {
-        padding: 10px 12px;
-        font-size: 14px;
-        line-height: 1.5;
-    }
-
-    .input-area {
-        padding: 8px 10px 10px;
-    }
-
-    .input-container {
-        gap: 6px;
-        padding: 7px;
-        border-radius: 14px;
-    }
-
-    #attachButton,
-    #sendButton {
-        width: 38px;
-        height: 38px;
-        min-width: 38px;
-    }
-
-    textarea#messageInput {
-        min-height: 38px;
-        max-height: 120px;
-        font-size: 14px;
-    }
-
-    .disclaimer {
-        font-size: 9px;
-        line-height: 1.35;
-        padding: 4px 8px 0;
-        text-align: center;
-    }
-
-    .attachment-menu {
-        left: 8px;
-        bottom: 58px;
-        max-width: calc(100vw - 92px);
-    }
-
-    .attached-file,
-    .project-indicator {
-        max-width: 100%;
-        font-size: 11px;
-    }
-
-    .code-block {
-        max-width: 100%;
-        overflow-x: auto;
-    }
-
-    .code-block pre {
-        font-size: 12px;
-    }
 }
 
-/* Very small phones */
-@media (max-width: 430px) {
-    .sidebar {
-        width: 58px;
-        min-width: 58px;
-    }
 
-    .main-area {
-        width: calc(100% - 58px);
-    }
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
 
-    .brand-logo {
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
-    }
+@media (max-width: 360px) {
 
-    #newChatButton {
-        padding: 8px 2px;
-    }
+  .sidebar {
+    width: 250px !important;
+  }
 
-    #chat,
-    .chat {
-        padding-left: 8px;
-        padding-right: 8px;
-    }
+  .messages,
+  .chat-messages,
+  #messages {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
 
-    .message {
-        max-width: 97%;
-    }
+  .input-area,
+  .chat-input-area,
+  .composer {
+    padding: 5px !important;
+  }
 
-    .message-content {
-        font-size: 13px;
-        padding: 9px 10px;
-    }
+  button {
+    min-width: 40px;
+  }
 
-    .input-area {
-        padding-left: 6px;
-        padding-right: 6px;
-    }
-
-    #attachButton,
-    #sendButton {
-        width: 34px;
-        height: 34px;
-        min-width: 34px;
-    }
-
-    textarea#messageInput {
-        font-size: 13px;
-    }
-}
-
-/* Auth card responsive */
-@media (max-width: 560px) {
-    #novaAuthOverlay {
-        padding: 16px;
-    }
-
-    .nova-auth-card {
-        width: min(100%, 390px);
-        padding: 26px 20px;
-        border-radius: 18px;
-    }
-
-    .nova-auth-card h1 {
-        font-size: 26px;
-    }
-
-    .nova-auth-sub {
-        font-size: 12px;
-    }
-
-    .nova-auth-card input,
-    .nova-auth-card button {
-        min-height: 44px;
-    }
-}
-
-/* Landscape phones */
-@media (max-height: 500px) and (max-width: 900px) {
-    .welcome {
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-
-    .welcome h2 {
-        font-size: 18px;
-    }
-
-    .welcome p {
-        display: none;
-    }
-
-    .input-area {
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-}
-
-/* Prevent accidental horizontal scrolling on small screens */
-@media (max-width: 900px) {
-    html,
-    body,
-    .app,
-    .main-area,
-    #chat {
-        max-width: 100%;
-    }
-
-    .message-content,
-    .project-indicator,
-    .attached-file,
-    .attachment-menu {
-        overflow-wrap: anywhere;
-    }
 }
