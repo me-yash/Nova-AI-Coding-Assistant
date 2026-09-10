@@ -3614,6 +3614,90 @@ input.addEventListener(
     }
 );
 
+/* =========================================================
+   NOVA MOBILE SIDEBAR
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const menuButton =
+        document.getElementById("mobileMenuButton");
+
+    const sidebar =
+        document.querySelector(".sidebar");
+
+    const backdrop =
+        document.getElementById("mobileSidebarBackdrop");
+
+
+    if (!menuButton || !sidebar || !backdrop) {
+        return;
+    }
+
+
+    function openMobileSidebar() {
+
+        sidebar.classList.add("mobile-open");
+
+        backdrop.classList.add("visible");
+
+        document.body.style.overflow = "hidden";
+    }
+
+
+    function closeMobileSidebar() {
+
+        sidebar.classList.remove("mobile-open");
+
+        backdrop.classList.remove("visible");
+
+        document.body.style.overflow = "";
+    }
+
+
+    menuButton.addEventListener(
+        "click",
+        openMobileSidebar
+    );
+
+
+    backdrop.addEventListener(
+        "click",
+        closeMobileSidebar
+    );
+
+
+    /* Close sidebar after selecting a chat */
+
+    sidebar.addEventListener("click", (event) => {
+
+        const chatItem =
+            event.target.closest(
+                ".conversation-item, #newChatButton"
+            );
+
+        if (!chatItem) {
+            return;
+        }
+
+        if (window.innerWidth <= 700) {
+            closeMobileSidebar();
+        }
+    });
+
+
+    /* Automatically reset when switching to desktop */
+
+    window.addEventListener("resize", () => {
+
+        if (window.innerWidth > 700) {
+            closeMobileSidebar();
+        }
+
+    });
+
+});
+
 
 
 // ========================================
