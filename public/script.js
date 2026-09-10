@@ -226,8 +226,8 @@ async function loadConversations() {
 
 
                 if (
-                    Number(conversation.id) ===
-                    Number(currentConversationId)
+                    String(conversation.id) ===
+String(currentConversationId)
                 ) {
 
                     item.classList.add(
@@ -326,8 +326,8 @@ async function openConversation(
 
     try {
 
-        currentConversationId =
-            Number(conversationId);
+       currentConversationId =
+    String(conversationId);
 
 
         chatTitle.textContent =
@@ -706,9 +706,7 @@ ${projectContext}
         if (returnedConversationId) {
 
             currentConversationId =
-                Number(
-                    returnedConversationId
-                );
+    String(returnedConversationId);
         }
 
 
@@ -870,8 +868,8 @@ async function updateCurrentTitle() {
         const current =
             conversations.find(
                 conversation =>
-                    Number(conversation.id) ===
-                    Number(currentConversationId)
+                    String(conversation.id) ===
+String(currentConversationId)
             );
 
 
@@ -1071,8 +1069,8 @@ function setActiveConversation(
 
 
             if (
-                Number(item.dataset.id) ===
-                Number(conversationId)
+                String(item.dataset.id) ===
+String(conversationId)
             ) {
 
                 item.classList.add(
